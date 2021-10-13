@@ -58,7 +58,7 @@ export class ConfigManager {
     headers: {},
     puppeteerArgs: ['--no-sandbox'],
     renderOnly: [],
-    closeBrowser: true,
+    closeBrowser: false,
     restrictedUrlPattern: null
   };
 
