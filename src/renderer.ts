@@ -128,7 +128,8 @@ export class Renderer {
     await page.setRequestInterception(true);
 
     page.on('request', (interceptedRequest: puppeteer.HTTPRequest) => {
-      if (this.restrictRequest(interceptedRequest.url())) {
+      const isMediaRequest = ['media', 'image'].includes(interceptedRequest.resourceType())
+      if (this.restrictRequest(interceptedRequest.url()) || isMediaRequest) {
         interceptedRequest.abort();
       } else {
         interceptedRequest.continue();
@@ -150,7 +151,7 @@ export class Renderer {
       // Navigate to page. Wait until there are no oustanding network requests.
       response = await page.goto(requestUrl, {
         timeout: this.config.timeout,
-        waitUntil: 'networkidle0',
+        waitUntil: 'domcontentloaded',
       });
     } catch (e) {
       console.error(e);
@@ -283,7 +284,7 @@ export class Renderer {
       // Navigate to page. Wait until there are no oustanding network requests.
       response = await page.goto(url, {
         timeout: this.config.timeout,
-        waitUntil: 'networkidle0',
+        waitUntil: 'domcontentloaded',
       });
     } catch (e) {
       console.error(e);

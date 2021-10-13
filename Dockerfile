@@ -1,5 +1,5 @@
 FROM node:15-slim
-ARG PORT="4300"
+ENV PORT=4300
 RUN apt update && apt dist-upgrade -y && \
 	apt install -y wget gnupg2 && \
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
